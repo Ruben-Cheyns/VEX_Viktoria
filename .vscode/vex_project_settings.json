@@ -1,0 +1,18 @@
+{
+	"project": {
+		"name": "Versus",
+		"slot": 1,
+		"description": "Our Basic versus template",
+		"platform": "V5",
+		"creationDate": "Tue, 19 Nov 2024 11:40:11 GMT",
+		"language": "python",
+		"python": {
+			"main": "src/main.py"
+		},
+		"sdkVersion": "V5_1_0_1_25"
+	},
+	"extension": {
+		"version": "0.6.0",
+		"json": 1
+	}
+}
