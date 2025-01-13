@@ -219,15 +219,15 @@ def forward(mm, V=60):                                                          
     while abs(Right.position()) < deg:                                                                               # repeats the loop until the distance is reached
         forwardError = inertial.rotation()                                                                      # calculates the error
         forwardDerivative = forwardError - forwardPrevError                                                     # calculates the derivative
-        v = (20/100) * forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                              # The total value in percentage as motor input
+        correct = (20/100) * forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                              # The total value in percentage as motor input
         forwardPrevError = forwardError                                                                         # sets the previous error to the current error
         forwardTotalError += forwardError                                                                       # adds the current error to the total error
         if forwardTotalError > 100:                                                                             #  } clamping on positive values to prevent buildup above 100%
             forwardTotalError = 100                                                                             # /
         elif forwardTotalError < -100:                                                                          #  } clamping on negative values to prevent buildup below -100%
             forwardTotalError = -100                                                                            # /
-        Right.spin(FORWARD, V - v, PERCENT)                                                                     #  } spins the motors using the computed degrees and set the speed to V with correction
-        Left.spin(FORWARD, V + v, PERCENT)                                                                      # /
+        Right.spin(FORWARD, V - correct, PERCENT)                                                                     #  } spins the motors using the computed degrees and set the speed to V with correction
+        Left.spin(FORWARD, V + correct, PERCENT)                                                                      # /
         wait(20)                                                                                                # waits to lighten the program 
     Right.stop(HOLD)                                                                                            #  } stops motors using hold brakestyle
     Left.stop(HOLD)                                                                                             # /
