@@ -207,7 +207,7 @@ def Turn(turnDesired, tolerance=0.2):                                           
 """
 
 KFP = KP
-KFI = 0.001
+KFI = KI
 KFD = KD
 
 def forward(mm, V=60):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
@@ -219,7 +219,7 @@ def forward(mm, V=60):                                                          
     while abs(Right.position()) < deg:                                                                               # repeats the loop until the distance is reached
         forwardError = inertial.rotation()                                                                      # calculates the error
         forwardDerivative = forwardError - forwardPrevError                                                     # calculates the derivative
-        v = forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                              # The total value in percentage as motor input
+        v = (20/100) * forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                              # The total value in percentage as motor input
         forwardPrevError = forwardError                                                                         # sets the previous error to the current error
         forwardTotalError += forwardError                                                                       # adds the current error to the total error
         if forwardTotalError > 100:                                                                             #  } clamping on positive values to prevent buildup above 100%
@@ -241,27 +241,28 @@ def onauton_autonomous_0():
     forward(930,75)
     cc.set(True)
     wait(500)
-    forward(500,-25)
+    forward(500,-60)
     cc.set(False)
-    Turn(180)
-    forward(100,-25)
+    Turn(170)
+    forward(300,-60)
     mogo.set(True)
     intake.spin(FORWARD)
     wait(500)
     mogo.set(False)
     intake.stop()
-    Turn(-87)
-    forward(300,-25)
+    Turn(-80)
+    forward(600,-60)
     mogo.set(True)
     intake.spin(FORWARD)
     Turn(45)
-    forward(300)
+    forward(600)
     wait(500)
     intake.stop()
 
 
 def when_started1():
     inertial.calibrate()
+    inertial.set_turn_type(LEFT)
 
 #####################
 #       END         #
