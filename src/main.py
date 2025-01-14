@@ -154,17 +154,32 @@ def onevent_controller_1buttonL2_pressed_0():
     intake.stop()
     Intake = False
 
+#   toggle ladybrown to next position  #
+def when_started6():
+    Lb.set_velocity(30, PERCENT)
+    Lb.set_max_torque(100, PERCENT)
+    while True:
+        while not controller_1.buttonR1.pressing():
+            wait(50, MSEC)
+        Lb.spin_to_position(120, DEGREES)
+        while not controller_1.buttonR1.pressing():
+            wait(50, MSEC)
+        Lb.spin_to_position(380, DEGREES)
+        while not controller_1.buttonR1.pressing():
+            wait(50, MSEC)
+        Lb.spin_to_position(0, DEGREES)
+
 #   spin ladybrown forwards on R2   #
-def onevent_controller_1buttonR2_pressed_0():
+def onevent_controller_1buttonUp_pressed_0():
     Lb.spin(FORWARD, 20, PERCENT)
-    while controller_1.buttonR2.pressing():
+    while controller_1.buttonUp.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
 #   spin ladybrown backwards on R1   #
-def onevent_controller_1buttonR1_pressed_0():
+def onevent_controller_1buttonDown_pressed_0():
     Lb.spin(REVERSE, 20, PERCENT)
-    while controller_1.buttonR1.pressing():
+    while controller_1.buttonDown.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
@@ -294,11 +309,11 @@ def vexcode_driver_function():
 competition = Competition( vexcode_driver_function, vexcode_auton_function )
 
 # system event handlers
-controller_1.buttonR2.pressed(onevent_controller_1buttonR2_pressed_0)
-controller_1.buttonR1.pressed(onevent_controller_1buttonR1_pressed_0)
 controller_1.buttonL1.pressed(onevent_controller_1buttonL1_pressed_0)
 controller_1.buttonL2.pressed(onevent_controller_1buttonL2_pressed_0)
 controller_1.buttonB.pressed(onevent_controller_1buttonB_pressed_0)
+controller_1.buttonUp.pressed(onevent_controller_1buttonUp_pressed_0)
+controller_1.buttonDown.pressed(onevent_controller_1buttonDown_pressed_0)
 
 # add 15ms delay to make sure events are registered correctly.
 wait(15, MSEC)
@@ -307,6 +322,6 @@ ws2 = Thread( when_started2 )
 ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
-#ws6 = Thread( when_started6 )
+ws6 = Thread( when_started6 )
 
 when_started1()
