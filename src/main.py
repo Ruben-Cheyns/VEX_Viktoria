@@ -221,9 +221,9 @@ def Turn(turnDesired, tolerance=0.2):                                           
     print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)
 """
 
-KFP = KP
-KFI = KI
-KFD = KD
+KFP = KP/2
+KFI = KI/2
+KFD = KD/2
 
 def forward(mm, V=60):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
@@ -234,7 +234,7 @@ def forward(mm, V=60):                                                          
     while abs(Right.position()) < deg:                                                                               # repeats the loop until the distance is reached
         forwardError = inertial.rotation()                                                                      # calculates the error
         forwardDerivative = forwardError - forwardPrevError                                                     # calculates the derivative
-        correct = (20/100) * forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                              # The total value in percentage as motor input
+        correct = forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                        # The total value in percentage as motor input
         forwardPrevError = forwardError                                                                         # sets the previous error to the current error
         forwardTotalError += forwardError                                                                       # adds the current error to the total error
         if forwardTotalError > 100:                                                                             #  } clamping on positive values to prevent buildup above 100%
