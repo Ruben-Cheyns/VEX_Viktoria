@@ -1,4 +1,3 @@
-
 #region VEXcode Generated Robot Configuration
 from vex import *
 import urandom
@@ -253,7 +252,8 @@ def forward(mm, V=60):                                                          
 
 def onauton_autonomous_0():
     intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(930,75)
+    forward(1200, -75)
+"""    forward(930,75)
     cc.set(True)
     wait(500)
     forward(500,-60)
@@ -273,7 +273,7 @@ def onauton_autonomous_0():
     forward(600)
     wait(500)
     intake.stop()
-
+"""
 
 def when_started1():
     inertial.calibrate()
