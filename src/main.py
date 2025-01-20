@@ -267,7 +267,11 @@ def onauton_autonomous_0():
     intake.spin(FORWARD)
     Turn(110)
     forward(500)
-
+    Turn(90)
+    forward(300)
+    forward(200, -60)
+    Turn(20)
+    forward(200)
 
 def when_started1():
     inertial.calibrate()
