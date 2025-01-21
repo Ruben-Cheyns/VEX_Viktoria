@@ -1,3 +1,4 @@
+
 #region VEXcode Generated Robot Configuration
 from vex import *
 import urandom
@@ -220,9 +221,9 @@ def Turn(turnDesired, tolerance=0.2):                                           
     print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)
 """
 
-KFP = KP
-KFI = KI
-KFD = KD
+KFP = KP/2
+KFI = KI/2
+KFD = KD/2
 
 def forward(mm, V=60):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
@@ -233,7 +234,7 @@ def forward(mm, V=60):                                                          
     while abs(Right.position()) < deg:                                                                               # repeats the loop until the distance is reached
         forwardError = inertial.rotation()                                                                      # calculates the error
         forwardDerivative = forwardError - forwardPrevError                                                     # calculates the derivative
-        correct = (20/100) * forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                              # The total value in percentage as motor input
+        correct = forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                        # The total value in percentage as motor input
         forwardPrevError = forwardError                                                                         # sets the previous error to the current error
         forwardTotalError += forwardError                                                                       # adds the current error to the total error
         if forwardTotalError > 100:                                                                             #  } clamping on positive values to prevent buildup above 100%
@@ -252,28 +253,7 @@ def forward(mm, V=60):                                                          
 
 def onauton_autonomous_0():
     intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(1200, -75)
-"""    forward(930,75)
-    cc.set(True)
-    wait(500)
-    forward(500,-60)
-    cc.set(False)
-    Turn(170)
-    forward(300,-60)
-    mogo.set(True)
-    intake.spin(FORWARD)
-    wait(500)
-    mogo.set(False)
-    intake.stop()
-    Turn(-80)
-    forward(600,-60)
-    mogo.set(True)
-    intake.spin(FORWARD)
-    Turn(45)
-    forward(600)
-    wait(500)
-    intake.stop()
-"""
+
 
 def when_started1():
     inertial.calibrate()
