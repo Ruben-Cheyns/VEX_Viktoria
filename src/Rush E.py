@@ -241,8 +241,8 @@ def forward(mm, V=60):                                                          
             forwardTotalError = 100                                                                             # /
         elif forwardTotalError < -100:                                                                          #  } clamping on negative values to prevent buildup below -100%
             forwardTotalError = -100                                                                            # /
-        Right.spin(FORWARD, V - correct, PERCENT)                                                                     #  } spins the motors using the computed degrees and set the speed to V with correction
-        Left.spin(FORWARD, V + correct, PERCENT)                                                                      # /
+        Right.spin(FORWARD, V - correct, PERCENT)                                                               #  } spins the motors using the computed degrees and set the speed to V with correction
+        Left.spin(FORWARD, V + correct, PERCENT)                                                                # /
         wait(20)                                                                                                # waits to lighten the program 
     Right.stop(HOLD)                                                                                            #  } stops motors using hold brakestyle
     Left.stop(HOLD)                                                                                             # /
