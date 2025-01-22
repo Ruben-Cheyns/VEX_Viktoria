@@ -22,6 +22,11 @@ intake_motor_c = Motor(Ports.PORT20, GearSetting.RATIO_18_1, False)
 intake = MotorGroup(intake_motor_a, intake_motor_b, intake_motor_c)
 Lb = Motor(Ports.PORT11 ,GearSetting.RATIO_18_1, False)
 inertial = Inertial(Ports.PORT19)
+ai_vision_5 = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
+class GameElements:
+    MOBILE_GOAL = 0
+    RED_RING = 1
+    BLUE_RING = 2
 
 # wait for rotation sensor to fully initialize
 wait(30, MSEC)
@@ -52,9 +57,10 @@ print("\033[2J")
 #   Drive function  #
 #####################
 
-myVariable = 0
 invert = False
 Intake = False
+vexcode_ai_vision_5_object_index = 0
+vexcode_ai_vision_5_objects = []
 
 def Drive():
     # drive function using arcade with two sticks
@@ -183,6 +189,25 @@ def onevent_controller_1buttonDown_pressed_0():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
+#   colorsorter   #
+def when_started7():
+    global vexcode_ai_vision_5_object_index, vexcode_ai_vision_5_objects
+    while True:
+            if vexcode_ai_vision_5_objects[vexcode_ai_vision_5_object_index].id == GameElements.BLUE_RING and vexcode_ai_vision_5_objects[vexcode_ai_vision_5_object_index].height > 80:
+                wait(2, SECONDS)
+                intake.spin(REVERSE)
+                wait(0.2, SECONDS)
+                intake.spin(FORWARD)
+            wait(5, MSEC)
+
+#   stakelock   #
+def when_started8():
+    while True:
+        if controller_1.buttonY.pressing():
+            if vexcode_ai_vision_5_objects[vexcode_ai_vision_5_object_index].id == GameElements.MOBILE_GOAL:
+                Turn(vexcode_ai_vision_5_objects[vexcode_ai_vision_5_object_index].angle)
+                wait(1, SECONDS)
+        wait(5, MSEC)
 
 #########################
 #   PID controllers     #
@@ -306,5 +331,7 @@ ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
 ws6 = Thread( when_started6 )
+ws7 = Thread( when_started7 )
+ws8 = Thread( when_started8 )
 
 when_started1()
