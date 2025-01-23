@@ -26,7 +26,9 @@ ai_vision_5 = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
 class GameElements:
     MOBILE_GOAL = 0
     RED_RING = 1
-    BLUE_RING = 2
+ai_vision_1__COLOR1 = Colordesc(1, 40, 131, 207, 15, 0.1)
+ai_vision_1__COLOR2 = Colordesc(2, 82, 129, 171, 10, 0.2)
+blue_ring = Codedesc(1, ai_vision_1__COLOR1, ai_vision_1__COLOR2)
 
 # wait for rotation sensor to fully initialize
 wait(30, MSEC)
@@ -192,14 +194,14 @@ def onevent_controller_1buttonDown_pressed_0():
 
 #   colorsorter   #
 def when_started7():
-    global vexcode_ai_vision_5_object_index, vexcode_ai_vision_5_objects
     while True:
-            if vexcode_ai_vision_5_objects[vexcode_ai_vision_5_object_index].id == GameElements.BLUE_RING and vexcode_ai_vision_5_objects[vexcode_ai_vision_5_object_index].height > 80:
-                wait(2, SECONDS)
-                intake.spin(REVERSE)
-                wait(0.2, SECONDS)
-                intake.spin(FORWARD)
-            wait(5, MSEC)
+        rings = ai_vision_5.take_snapshot(blue_ring)
+        if rings and len(rings) > 0:
+            wait(2, SECONDS)
+            intake.spin(REVERSE)
+            wait(0.2, SECONDS)
+            intake.spin(FORWARD)
+        wait(5, MSEC)
 
 #   stakelock   #
 def when_started8():
