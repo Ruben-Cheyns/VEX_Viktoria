@@ -22,12 +22,12 @@ intake_motor_c = Motor(Ports.PORT20, GearSetting.RATIO_18_1, False)
 intake = MotorGroup(intake_motor_a, intake_motor_b, intake_motor_c)
 Lb = Motor(Ports.PORT11 ,GearSetting.RATIO_18_1, False)
 inertial = Inertial(Ports.PORT19)
-ai_vision_5 = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
+ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
 class GameElements:
     MOBILE_GOAL = 0
     RED_RING = 1
-ai_vision_1__COLOR1 = Colordesc(1, 40, 131, 207, 15, 0.1)
-ai_vision_1__COLOR2 = Colordesc(2, 82, 129, 171, 10, 0.2)
+ai_vision_1__COLOR1 = Colordesc(1, 28, 64, 107, 14, 0.2)
+ai_vision_1__COLOR2 = Colordesc(2, 67, 106, 129, 13, 0.2)
 blue_ring = Codedesc(1, ai_vision_1__COLOR1, ai_vision_1__COLOR2)
 
 # wait for rotation sensor to fully initialize
@@ -195,11 +195,11 @@ def onevent_controller_1buttonDown_pressed_0():
 #   colorsorter   #
 def when_started7():
     while True:
-        rings = ai_vision_5.take_snapshot(blue_ring)
-        if rings and len(rings) > 0:
-            wait(2, SECONDS)
-            intake.spin(REVERSE)
-            wait(0.2, SECONDS)
+        rings = ai_vision.take_snapshot(blue_ring)
+        if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
+            wait(0.27, SECONDS)
+            intake.stop()
+            wait(0.6, SECONDS)
             intake.spin(FORWARD)
         wait(5, MSEC)
 
