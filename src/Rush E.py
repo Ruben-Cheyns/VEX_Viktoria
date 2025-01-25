@@ -292,7 +292,6 @@ def onauton_autonomous_0():
     cc.set(False)
     intake.stop()
 
-
 def when_started1():
     inertial.calibrate()
     inertial.set_turn_type(LEFT)
