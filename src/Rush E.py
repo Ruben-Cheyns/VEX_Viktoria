@@ -287,11 +287,15 @@ def onauton_autonomous_0():
     forward(600)
     Turn(-60)
     cc.set(True)
-    forward(900)
+    forward(600)
+    Turn(60)
+    forward(200)
+    Turn(-60)
+    forward(100)
     Turn(-90)
     cc.set(False)
     intake.stop()
-
+    
 
 def when_started1():
     inertial.calibrate()
