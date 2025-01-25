@@ -249,11 +249,11 @@ def Turn(turnDesired, tolerance=0.2):                                           
     print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)
 """
 
-KFP = KP/2
-KFI = KI/2
-KFD = KD/2
+KFP = KP
+KFI = 0
+KFD = 0
 
-def forward(mm, V=60):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
+def forward(mm, V=75):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     Right.reset_position()                                                                                      # resets the motor position to 0
@@ -281,24 +281,24 @@ def forward(mm, V=60):                                                          
 
 def onauton_autonomous_0():
     intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(250, -60)
+    forward(250, -75)
     Turn(90)
-    forward(100, -20)
+    forward(150, -20)
     intake.spin(FORWARD)
     wait(1500)
-    forward(120)
+    forward(70)
     intake.stop()
     Turn(135)
-    forward(1000, -60)
+    forward(1000, -75)
     mogo.set(True)
     wait(500)
     intake.spin(FORWARD)
-    Turn(110)
+    Turn(115)
     forward(500)
     Turn(90)
     forward(300)
-    forward(200, -60)
-    Turn(20)
+    forward(200, -75)
+    Turn(10)
     forward(200)
 
 def when_started1():
