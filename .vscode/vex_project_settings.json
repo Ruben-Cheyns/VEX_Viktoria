@@ -1,8 +1,8 @@
 {
 	"project": {
-		"name": "Rush-E",
-		"slot": 2,
-		"description": "Red right",
+		"name": "Blue-Left",
+		"slot": 3,
+		"description": "Blue-Left",
 		"platform": "V5",
 		"creationDate": "Tue, 19 Nov 2024 11:40:11 GMT",
 		"language": "python",
