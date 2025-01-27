@@ -288,7 +288,7 @@ def onauton_autonomous_0():
     wait(1500)
     forward(70)
     intake.stop()
-    Turn(-135)
+    Turn(-145)
     forward(1000, -75)
     mogo.set(True)
     wait(500)
