@@ -232,10 +232,10 @@ def Turn(turnDesired, tolerance=0.2):                                           
         turn = turnError * KP + turnDerivative * KD + turnTotalError * KI                                       # The total value in percentage as motor input
         turnPrevError = turnError                                                                               # sets the previous error to the current error
         turnTotalError += turnError                                                                             # adds the current error to the total error
-        if turnTotalError > 100:                                                                                #  } clamping on positive values to prevent buildup above 100%
-            turnTotalError = 100                                                                                # /
-        elif turnTotalError < -100:                                                                             #  } clamping on negative values to prevent buildup below -100%
-            turnTotalError = -100                                                                               # /
+        if turnTotalError > 75:                                                                                #  } clamping on positive values to prevent buildup above 100%
+            turnTotalError = 75                                                                                # /
+        elif turnTotalError < -75:                                                                             #  } clamping on negative values to prevent buildup below -100%
+            turnTotalError = -75                                                                               # /
         Right.spin(FORWARD, -turn, PERCENT)                                                                     #  } starts the motors and set the speed to turn
         Left.spin(FORWARD, turn, PERCENT)                                                                       # /
         
