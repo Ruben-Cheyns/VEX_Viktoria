@@ -232,10 +232,10 @@ def Turn(turnDesired, tolerance=0.2):                                           
         turn = turnError * KP + turnDerivative * KD + turnTotalError * KI                                       # The total value in percentage as motor input
         turnPrevError = turnError                                                                               # sets the previous error to the current error
         turnTotalError += turnError                                                                             # adds the current error to the total error
-        if turnTotalError > 100:                                                                                #  } clamping on positive values to prevent buildup above 100%
-            turnTotalError = 100                                                                                # /
-        elif turnTotalError < -100:                                                                             #  } clamping on negative values to prevent buildup below -100%
-            turnTotalError = -100                                                                               # /
+        if turnTotalError > 75:                                                                                #  } clamping on positive values to prevent buildup above 100%
+            turnTotalError = 75                                                                                # /
+        elif turnTotalError < -75:                                                                             #  } clamping on negative values to prevent buildup below -100%
+            turnTotalError = -75                                                                               # /
         Right.spin(FORWARD, -turn, PERCENT)                                                                     #  } starts the motors and set the speed to turn
         Left.spin(FORWARD, turn, PERCENT)                                                                       # /
         
@@ -280,26 +280,7 @@ def forward(mm, V=75):                                                          
 #################
 
 def onauton_autonomous_0():
-    intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(250, -75)
     Turn(90)
-    forward(150, -20)
-    intake.spin(FORWARD)
-    wait(1500)
-    forward(70)
-    intake.stop()
-    Turn(135)
-    forward(1000, -75)
-    mogo.set(True)
-    wait(500)
-    intake.spin(FORWARD)
-    Turn(115)
-    forward(500)
-    Turn(90)
-    forward(300)
-    forward(200, -75)
-    Turn(10)
-    forward(200)
 
 def when_started1():
     inertial.calibrate()

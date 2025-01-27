@@ -1,7 +1,7 @@
 {
 	"project": {
 		"name": "Versus",
-		"slot": 1,
+		"slot": 5,
 		"description": "Our Basic versus template",
 		"platform": "V5",
 		"creationDate": "Tue, 19 Nov 2024 11:40:11 GMT",
