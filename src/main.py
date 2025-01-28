@@ -220,7 +220,7 @@ KP =0.65
 KI =0.03
 KD =0.5
 
-def Turn(turnDesired, tolerance=0.2):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
+def Turn(turnDesired, tolerance=0.5):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     turnPrevError = 0                                                                                           # \
     turnTotalError = 0                                                                                          #  } declares variables for the PID
@@ -285,7 +285,7 @@ def onauton_autonomous_0():
     Turn(90)
     forward(150, -20)
     intake.spin(FORWARD)
-    wait(1500)
+    wait(500)
     forward(70)
     intake.stop()
     Turn(135)
@@ -293,13 +293,13 @@ def onauton_autonomous_0():
     mogo.set(True)
     wait(500)
     intake.spin(FORWARD)
-    Turn(115)
-    forward(500)
-    Turn(90)
-    forward(300)
-    forward(200, -75)
-    Turn(10)
+    Turn(110)
+    forward(450)
+    Turn(87)
     forward(200)
+    forward(100, -75)
+    Turn(10)
+    forward(100)
 
 def when_started1():
     inertial.calibrate()
