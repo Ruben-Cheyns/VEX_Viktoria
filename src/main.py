@@ -240,7 +240,7 @@ def Turn(turnDesired, tolerance=0.2):                                           
         Left.spin(FORWARD, turn, PERCENT)                                                                       # /
         
         wait(50)                                                                                                # waits to lighten the program
-        print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)      # prints feedback used to tune the PID
+        print(inertial.rotation(),"\t", turn, "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)      # prints feedback used to tune the PID
     
     Right.stop(HOLD)                                                                                            #  } stops motors using hold brakestyle
     Left.stop(HOLD)                                                                                             # /
@@ -253,7 +253,7 @@ KFP = KP
 KFI = 0
 KFD = 0
 
-def forward(mm, V=75):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
+def forward(mm, V=85):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     Right.reset_position()                                                                                      # resets the motor position to 0
@@ -281,6 +281,7 @@ def forward(mm, V=75):                                                          
 
 def onauton_autonomous_0():
     Turn(90)
+    forward(3000)
 
 def when_started1():
     inertial.calibrate()
