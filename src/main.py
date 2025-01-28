@@ -253,7 +253,7 @@ KFP = KP
 KFI = 0
 KFD = 0
 
-def forward(mm, V=75):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
+def forward(mm, V=85):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     Right.reset_position()                                                                                      # resets the motor position to 0
