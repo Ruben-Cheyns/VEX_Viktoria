@@ -26,6 +26,7 @@ class GameElements:
     MOBILE_GOAL = 0
     RED_RING = 1
 blue_ring = Colordesc(1, 28, 64, 107, 40, 0.2)
+red_ring = Colordesc(1, 0, 0, 0, 0, 0)
 ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring)
 
 
@@ -194,7 +195,7 @@ def onevent_controller_1buttonDown_pressed_0():
 #   colorsorter   #
 def when_started7():
     while True:
-        rings = ai_vision.take_snapshot(blue_ring)
+        rings = ai_vision.take_snapshot(red_ring)
         if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
             wait(0.42, SECONDS)
             intake.stop()
