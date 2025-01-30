@@ -279,7 +279,7 @@ def forward(mm, V=85):                                                          
 
 def onauton_autonomous_0():
     intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(700, -75)
+    forward(700, -85)
     mogo.set(True)
     Turn(-65)
     intake.spin(FORWARD)
@@ -289,6 +289,10 @@ def onauton_autonomous_0():
     forward(900)
     Turn(90)
     cc.set(False)
+    forward(200)
+    wait(500)
+    forward(100, -85)
+    forward(400)
     intake.stop()
 
 def when_started1():
