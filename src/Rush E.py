@@ -218,7 +218,7 @@ KP =0.65
 KI =0.03
 KD =0.5
 
-def Turn(turnDesired, tolerance=0.2):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
+def Turn(turnDesired, tolerance=0.5):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     turnPrevError = 0                                                                                           # \
     turnTotalError = 0                                                                                          #  } declares variables for the PID
@@ -251,7 +251,7 @@ KFP = KP
 KFI = 0
 KFD = 0
 
-def forward(mm, V=60):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
+def forward(mm, V=85):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     Right.reset_position()                                                                                      # resets the motor position to 0
