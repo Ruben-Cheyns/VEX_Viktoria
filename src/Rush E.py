@@ -26,9 +26,8 @@ ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
 class GameElements:
     MOBILE_GOAL = 0
     RED_RING = 1
-ai_vision_1__COLOR1 = Colordesc(1, 28, 64, 107, 14, 0.2)
-ai_vision_1__COLOR2 = Colordesc(2, 67, 106, 129, 13, 0.2)
-blue_ring = Codedesc(1, ai_vision_1__COLOR1, ai_vision_1__COLOR2)
+blue_ring = Colordesc(1, 28, 64, 107, 40, 0.2)
+ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring)
 
 # wait for rotation sensor to fully initialize
 wait(30, MSEC)
@@ -196,9 +195,9 @@ def when_started7():
     while True:
         rings = ai_vision.take_snapshot(blue_ring)
         if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
-            wait(0.27, SECONDS)
+            wait(0.42, SECONDS)
             intake.stop()
-            wait(0.6, SECONDS)
+            wait(200)
             intake.spin(FORWARD)
         wait(5, MSEC)
 
