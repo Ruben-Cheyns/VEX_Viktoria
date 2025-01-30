@@ -192,7 +192,7 @@ def onevent_controller_1buttonDown_pressed_0():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
-#   colorsorter   #
+#   colorsorter   #  disabled in starting thread
 def when_started7():
     while True:
         rings = ai_vision.take_snapshot(red_ring)
@@ -220,7 +220,7 @@ KP =0.65
 KI =0.03
 KD =0.5
 
-def Turn(turnDesired, tolerance=0.2):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
+def Turn(turnDesired, tolerance=0.5):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     turnPrevError = 0                                                                                           # \
     turnTotalError = 0                                                                                          #  } declares variables for the PID
@@ -281,7 +281,7 @@ def forward(mm, V=85):                                                          
 
 def onauton_autonomous_0():
     intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(250, -75)
+    forward(250, -85)
     Turn(-90)
     forward(150, -20)
     intake.spin(FORWARD)
@@ -289,7 +289,7 @@ def onauton_autonomous_0():
     forward(70)
     intake.stop()
     Turn(-145)
-    forward(1000, -75)
+    forward(1000, -85)
     mogo.set(True)
     wait(500)
     intake.spin(FORWARD)
@@ -297,7 +297,7 @@ def onauton_autonomous_0():
     forward(500)
     Turn(-90)
     forward(300)
-    forward(200, -75)
+    forward(200, -85)
     Turn(-10)
     forward(200)
 
@@ -349,7 +349,7 @@ ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
 ws6 = Thread( when_started6 )
-ws7 = Thread( when_started7 )
+#ws7 = Thread( when_started7 )
 ws8 = Thread( when_started8 )
 
 when_started1()
