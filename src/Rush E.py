@@ -219,7 +219,7 @@ KP =0.65
 KI =0.03
 KD =0.5
 
-def Turn(turnDesired, tolerance=0.2):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
+def Turn(turnDesired, tolerance=0.5):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     turnPrevError = 0                                                                                           # \
     turnTotalError = 0                                                                                          #  } declares variables for the PID
@@ -231,10 +231,10 @@ def Turn(turnDesired, tolerance=0.2):                                           
         turn = turnError * KP + turnDerivative * KD + turnTotalError * KI                                       # The total value in percentage as motor input
         turnPrevError = turnError                                                                               # sets the previous error to the current error
         turnTotalError += turnError                                                                             # adds the current error to the total error
-        if turnTotalError > 100:                                                                                #  } clamping on positive values to prevent buildup above 100%
-            turnTotalError = 100                                                                                # /
-        elif turnTotalError < -100:                                                                             #  } clamping on negative values to prevent buildup below -100%
-            turnTotalError = -100                                                                               # /
+        if turnTotalError > 75:                                                                                #  } clamping on positive values to prevent buildup above 100%
+            turnTotalError = 75                                                                                # /
+        elif turnTotalError < -75:                                                                             #  } clamping on negative values to prevent buildup below -100%
+            turnTotalError = -75                                                                               # /
         Right.spin(FORWARD, -turn, PERCENT)                                                                     #  } starts the motors and set the speed to turn
         Left.spin(FORWARD, turn, PERCENT)                                                                       # /
         
@@ -252,7 +252,7 @@ KFP = KP
 KFI = 0
 KFD = 0
 
-def forward(mm, V=60):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
+def forward(mm, V=85):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     Right.reset_position()                                                                                      # resets the motor position to 0
@@ -279,23 +279,23 @@ def forward(mm, V=60):                                                          
 #################
 def onauton_autonomous_0():
     intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(700, -75)
+    forward(700, -85)
     mogo.set(True)
     Turn(65)
     intake.spin(FORWARD)
     forward(600)
-    Turn(-60)
+    Turn(-135)
+    forward(920)
+    Turn(90)
     cc.set(True)
     forward(600)
-    Turn(60)
-    forward(200)
-    Turn(-60)
-    forward(100)
-    Turn(-90)
+    Turn(90)
     cc.set(False)
-    intake.stop()
+    Turn(-15)
+    forward(300)
+    wait(200)
+    forward(100, -85)
     forward(200)
-
 
 def when_started1():
     inertial.calibrate()
@@ -345,7 +345,7 @@ ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
 ws6 = Thread( when_started6 )
-ws7 = Thread( when_started7 )
+#ws7 = Thread( when_started7 )
 ws8 = Thread( when_started8 )
 
 when_started1()
