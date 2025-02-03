@@ -165,7 +165,7 @@ def onevent_controller_1buttonL2_pressed_0():
 
 #   toggle ladybrown to next position  #
 def when_started6():
-    Lb.set_velocity(30, PERCENT)
+    Lb.set_velocity(60, PERCENT)
     Lb.set_max_torque(100, PERCENT)
     while True:
         while not controller_1.buttonR1.pressing():
@@ -180,14 +180,14 @@ def when_started6():
 
 #   spin ladybrown forwards on R2   #
 def onevent_controller_1buttonUp_pressed_0():
-    Lb.spin(FORWARD, 20, PERCENT)
+    Lb.spin(FORWARD)
     while controller_1.buttonUp.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
 #   spin ladybrown backwards on R1   #
 def onevent_controller_1buttonDown_pressed_0():
-    Lb.spin(REVERSE, 20, PERCENT)
+    Lb.spin(REVERSE)
     while controller_1.buttonDown.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
