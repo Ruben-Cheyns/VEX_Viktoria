@@ -26,7 +26,7 @@ class GameElements:
     MOBILE_GOAL = 0
     RED_RING = 1
 blue_ring = Colordesc(1, 28, 64, 107, 40, 0.2)
-red_ring = Colordesc(1, 0, 0, 0, 0, 0)
+red_ring = Colordesc(1, 140, 35, 58, 10, 0.2)
 ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring)
 
 
