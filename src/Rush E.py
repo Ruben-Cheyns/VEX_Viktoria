@@ -193,14 +193,21 @@ def onevent_controller_1buttonDown_pressed_0():
 #   colorsorter   #
 def when_started7():
     while True:
-        rings = ai_vision.take_snapshot(blue_ring)
-        if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
-            wait(0.42, SECONDS)
-            intake.stop()
-            wait(200)
-            intake.spin(FORWARD)
-        wait(5, MSEC)
-
+        while not controller_1.buttonRight.pressing():
+            rings = ai_vision.take_snapshot(blue_ring)
+            if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
+                wait(0.42, SECONDS)
+                intake.stop()
+                wait(200)
+                intake.spin(FORWARD)
+            wait(5, MSEC)
+        while controller_1.buttonRight.pressing():
+            wait(5, MSEC)
+        while not controller_1.buttonRight.pressing():
+            wait(50, MSEC)
+        while controller_1.buttonRight.pressing():
+            wait(5, MSEC)
+            
 #   stakelock   #
 def when_started8():
     while True:
