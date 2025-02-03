@@ -25,10 +25,10 @@ inertial = Inertial(Ports.PORT19)
 ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
 class GameElements:
     MOBILE_GOAL = 0
-    RED_RING = 1
-ai_vision_1__COLOR1 = Colordesc(1, 28, 64, 107, 14, 0.2)
-ai_vision_1__COLOR2 = Colordesc(2, 67, 106, 129, 13, 0.2)
-blue_ring = Codedesc(1, ai_vision_1__COLOR1, ai_vision_1__COLOR2)
+red_ring = Colordesc(1, 0, 0, 0, 0, 0.0)
+ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS, red_ring)
+
+
 
 # wait for rotation sensor to fully initialize
 wait(30, MSEC)
@@ -194,14 +194,21 @@ def onevent_controller_1buttonDown_pressed_0():
 #   colorsorter   #
 def when_started7():
     while True:
-        rings = ai_vision.take_snapshot(blue_ring)
-        if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
-            wait(0.27, SECONDS)
-            intake.stop()
-            wait(0.6, SECONDS)
-            intake.spin(FORWARD)
-        wait(5, MSEC)
-
+        while not controller_1.buttonRight.pressing():
+            rings = ai_vision.take_snapshot(red_ring)
+            if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
+                wait(0.42, SECONDS)
+                intake.stop()
+                wait(200)
+                intake.spin(FORWARD)
+            wait(5, MSEC)
+        while controller_1.buttonRight.pressing():
+            wait(5, MSEC)
+        while not controller_1.buttonRight.pressing():
+            wait(50, MSEC)
+        while controller_1.buttonRight.pressing():
+            wait(5, MSEC)
+            
 #   stakelock   #
 def when_started8():
     while True:
