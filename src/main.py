@@ -27,7 +27,7 @@ class GameElements:
     RED_RING = 1
 blue_ring = Colordesc(1, 28, 64, 107, 40, 0.2)
 red_ring = Colordesc(1, 140, 35, 58, 10, 0.2)
-ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring)
+ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring, red_ring)
 
 
 # wait for rotation sensor to fully initialize
@@ -192,7 +192,7 @@ def onevent_controller_1buttonDown_pressed_0():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
-#   colorsorter   #  disabled in starting thread
+#   colorsorter   #
 def when_started7():
     while True:
         while not controller_1.buttonRight.pressing():
@@ -354,12 +354,12 @@ controller_1.buttonDown.pressed(onevent_controller_1buttonDown_pressed_0)
 # add 15ms delay to make sure events are registered correctly.
 wait(15, MSEC)
 
-ws2 = Thread( when_started2 )
+#ws2 = Thread( when_started2 )
 ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
 ws6 = Thread( when_started6 )
-#ws7 = Thread( when_started7 )
+ws7 = Thread( when_started7 )
 ws8 = Thread( when_started8 )
 
 when_started1()
