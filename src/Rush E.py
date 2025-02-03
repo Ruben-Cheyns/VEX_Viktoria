@@ -25,7 +25,7 @@ inertial = Inertial(Ports.PORT19)
 ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
 class GameElements:
     MOBILE_GOAL = 0
-red_ring = Colordesc(1, 0, 0, 0, 0, 0.0)
+red_ring = Colordesc(1, 140, 35, 58, 10, 0.2)
 ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS, red_ring)
 
 
