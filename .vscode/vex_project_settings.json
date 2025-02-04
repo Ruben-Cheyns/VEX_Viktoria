@@ -1,7 +1,7 @@
 {
 	"project": {
 		"name": "Autonomous",
-		"slot": 1,
+		"slot": 6,
 		"description": "Autonomous",
 		"platform": "V5",
 		"creationDate": "Tue, 19 Nov 2024 11:40:11 GMT",

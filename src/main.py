@@ -229,10 +229,11 @@ KP =0.65
 KI =0.03
 KD =0.5
 
-def Turn(turnDesired, tolerance=0.5):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
+def Turn(turnDesired, tolerance=0.2):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     turnPrevError = 0                                                                                           # \
     turnTotalError = 0                                                                                          #  } declares variables for the PID
+    wait(100)
     t = 0                                                                                                       # /
     while abs(turnDesired + inertial.rotation()) > tolerance:                                                   # repeats the PID until the given angle is reached   
         t += 1                                                                                                  # counts iterrations for feedback
@@ -241,18 +242,18 @@ def Turn(turnDesired, tolerance=0.5):                                           
         turn = turnError * KP + turnDerivative * KD + turnTotalError * KI                                       # The total value in percentage as motor input
         turnPrevError = turnError                                                                               # sets the previous error to the current error
         turnTotalError += turnError                                                                             # adds the current error to the total error
-        if turnTotalError > 75:                                                                                #  } clamping on positive values to prevent buildup above 100%
-            turnTotalError = 75                                                                                # /
-        elif turnTotalError < -75:                                                                             #  } clamping on negative values to prevent buildup below -100%
-            turnTotalError = -75                                                                               # /
+        if turnTotalError > 75:                                                                                 #  } clamping on positive values to prevent buildup above 100%
+            turnTotalError = 75                                                                                 # /
+        elif turnTotalError < -75:                                                                              #  } clamping on negative values to prevent buildup below -100%
+            turnTotalError = -75                                                                                # /
         Right.spin(FORWARD, -turn, PERCENT)                                                                     #  } starts the motors and set the speed to turn
         Left.spin(FORWARD, turn, PERCENT)                                                                       # /
         
         wait(50)                                                                                                # waits to lighten the program
         print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)      # prints feedback used to tune the PID
     
-    Right.stop(HOLD)                                                                                            #  } stops motors using hold brakestyle
-    Left.stop(HOLD)                                                                                             # /
+    Right.stop(COAST)                                                                                            #  } stops motors using hold brakestyle
+    Left.stop(COAST)                                                                                             # /
 
     """wait(1000)                                                                                               # used in debuging to see the final angle
     print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)
@@ -291,15 +292,16 @@ def forward(mm, V=85):                                                          
 def onauton_autonomous_0():
     intake.spin(FORWARD)
     wait(500)
-    Turn(120)
-    forward(700, -85)
+    Turn(110)
+    forward(600, -85)
     mogo.set(True)
-    Turn(-120)
-    forward(700)
-    Turn(-90)
-    forward(700)
-    Turn(-90)
-    forward(900)
+    wait(500)
+    Turn(-110)
+    forward(500)
+    Turn(-92)
+    forward(500)
+    Turn(-92)
+    forward(1100)
     Turn(-100)
     forward(300, -85)
     mogo.set(False)
