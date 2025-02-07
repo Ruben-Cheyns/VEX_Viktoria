@@ -15,6 +15,7 @@ Right_motor_mogo = Motor(Ports.PORT2, GearSetting.RATIO_18_1, False)
 Right = MotorGroup(Right_motor_in, Right_motor_mogo)
 controller_1 = Controller(PRIMARY)
 mogo = DigitalOut(brain.three_wire_port.a)
+climb = DigitalOut(brain.three_wire_port.b)
 cc = DigitalOut(brain.three_wire_port.c)
 intake_motor_a = Motor(Ports.PORT12, GearSetting.RATIO_18_1, True)
 intake_motor_b = Motor(Ports.PORT1, GearSetting.RATIO_18_1, False)
@@ -131,6 +132,25 @@ def when_started5():
         while controller_1.buttonY.pressing():
             wait(5, MSEC)
         wait(5, MSEC)
+
+#   toggle climb    #
+def when_started9():
+    while True:
+        while not controller_1.buttonLeft.pressing():
+            wait(5, MSEC)
+        climb.set(True)
+        while controller_1.buttonLeft.pressing():
+            wait(5, MSEC)
+        while not controller_1.buttonLeft.pressing():
+            wait(5, MSEC)
+        climb.set(False)
+        while controller_1.buttonLeft.pressing():
+            wait(5, MSEC)
+
+#   climb auto open #
+def ondriver_drivercontrol_1():
+    wait(90, SECONDS)
+    climb.set(False)
 
 #   set intake velocity and brake   #
 def when_started4():
@@ -336,6 +356,7 @@ def vexcode_auton_function():
 def vexcode_driver_function():
     # Start the driver control tasks
     driver_control_task_0 = Thread( ondriver_drivercontrol_0 )
+    driver_control_task_1 = Thread( ondriver_drivercontrol_1 )
 
     # wait for the driver control period to end
     while( competition.is_driver_control() and competition.is_enabled() ):
@@ -343,6 +364,7 @@ def vexcode_driver_function():
         wait( 10, MSEC )
     # Stop the driver control tasks
     driver_control_task_0.stop()
+    driver_control_task_1.stop()
 
 # register the competition functions
 competition = Competition( vexcode_driver_function, vexcode_auton_function )
@@ -364,5 +386,6 @@ ws5 = Thread( when_started5 )
 ws6 = Thread( when_started6 )
 ws7 = Thread( when_started7 )
 ws8 = Thread( when_started8 )
+ws9 = Thread( when_started9 )
 
 when_started1()
