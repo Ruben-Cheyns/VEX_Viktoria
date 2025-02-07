@@ -25,10 +25,10 @@ inertial = Inertial(Ports.PORT19)
 ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
 class GameElements:
     MOBILE_GOAL = 0
-    RED_RING = 1
-ai_vision_1__COLOR1 = Colordesc(1, 28, 64, 107, 14, 0.2)
-ai_vision_1__COLOR2 = Colordesc(2, 67, 106, 129, 13, 0.2)
-blue_ring = Codedesc(1, ai_vision_1__COLOR1, ai_vision_1__COLOR2)
+red_ring = Colordesc(1, 140, 35, 58, 10, 0.2)
+ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS, red_ring)
+
+
 
 # wait for rotation sensor to fully initialize
 wait(30, MSEC)
@@ -164,7 +164,7 @@ def onevent_controller_1buttonL2_pressed_0():
 
 #   toggle ladybrown to next position  #
 def when_started6():
-    Lb.set_velocity(30, PERCENT)
+    Lb.set_velocity(60, PERCENT)
     Lb.set_max_torque(100, PERCENT)
     while True:
         while not controller_1.buttonR1.pressing():
@@ -179,14 +179,14 @@ def when_started6():
 
 #   spin ladybrown forwards on R2   #
 def onevent_controller_1buttonUp_pressed_0():
-    Lb.spin(FORWARD, 20, PERCENT)
+    Lb.spin(FORWARD)
     while controller_1.buttonUp.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
 #   spin ladybrown backwards on R1   #
 def onevent_controller_1buttonDown_pressed_0():
-    Lb.spin(REVERSE, 20, PERCENT)
+    Lb.spin(REVERSE)
     while controller_1.buttonDown.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
@@ -194,14 +194,24 @@ def onevent_controller_1buttonDown_pressed_0():
 #   colorsorter   #
 def when_started7():
     while True:
-        rings = ai_vision.take_snapshot(blue_ring)
-        if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
-            wait(0.27, SECONDS)
-            intake.stop()
-            wait(0.6, SECONDS)
-            intake.spin(FORWARD)
-        wait(5, MSEC)
-
+        controller_1.screen.clear_line()
+        controller_1.screen.print("sorting")
+        while not controller_1.buttonRight.pressing():
+            rings = ai_vision.take_snapshot(red_ring)
+            if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
+                wait(0.42, SECONDS)
+                intake.stop()
+                wait(200)
+                intake.spin(FORWARD)
+            wait(5, MSEC)
+        while controller_1.buttonRight.pressing():
+            wait(5, MSEC)
+        controller_1.screen.clear_line()
+        while not controller_1.buttonRight.pressing():
+            wait(50, MSEC)
+        while controller_1.buttonRight.pressing():
+            wait(5, MSEC)
+            
 #   stakelock   #
 def when_started8():
     while True:
@@ -219,7 +229,7 @@ KP =0.65
 KI =0.03
 KD =0.5
 
-def Turn(turnDesired, tolerance=0.2):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
+def Turn(turnDesired, tolerance=0.5):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     turnPrevError = 0                                                                                           # \
     turnTotalError = 0                                                                                          #  } declares variables for the PID
@@ -231,10 +241,10 @@ def Turn(turnDesired, tolerance=0.2):                                           
         turn = turnError * KP + turnDerivative * KD + turnTotalError * KI                                       # The total value in percentage as motor input
         turnPrevError = turnError                                                                               # sets the previous error to the current error
         turnTotalError += turnError                                                                             # adds the current error to the total error
-        if turnTotalError > 100:                                                                                #  } clamping on positive values to prevent buildup above 100%
-            turnTotalError = 100                                                                                # /
-        elif turnTotalError < -100:                                                                             #  } clamping on negative values to prevent buildup below -100%
-            turnTotalError = -100                                                                               # /
+        if turnTotalError > 75:                                                                                #  } clamping on positive values to prevent buildup above 100%
+            turnTotalError = 75                                                                                # /
+        elif turnTotalError < -75:                                                                             #  } clamping on negative values to prevent buildup below -100%
+            turnTotalError = -75                                                                               # /
         Right.spin(FORWARD, -turn, PERCENT)                                                                     #  } starts the motors and set the speed to turn
         Left.spin(FORWARD, turn, PERCENT)                                                                       # /
         
@@ -252,7 +262,7 @@ KFP = KP
 KFI = 0
 KFD = 0
 
-def forward(mm, V=60):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
+def forward(mm, V=85):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     Right.reset_position()                                                                                      # resets the motor position to 0
@@ -264,10 +274,10 @@ def forward(mm, V=60):                                                          
         correct = forwardError * KFP + forwardDerivative * KFD + forwardTotalError * KFI                        # The total value in percentage as motor input
         forwardPrevError = forwardError                                                                         # sets the previous error to the current error
         forwardTotalError += forwardError                                                                       # adds the current error to the total error
-        if forwardTotalError > 100:                                                                             #  } clamping on positive values to prevent buildup above 100%
-            forwardTotalError = 100                                                                             # /
-        elif forwardTotalError < -100:                                                                          #  } clamping on negative values to prevent buildup below -100%
-            forwardTotalError = -100                                                                            # /
+        if forwardTotalError > 75:                                                                             #  } clamping on positive values to prevent buildup above 100%
+            forwardTotalError = 75                                                                             # /
+        elif forwardTotalError < -75:                                                                          #  } clamping on negative values to prevent buildup below -100%
+            forwardTotalError = -75                                                                            # /
         Right.spin(FORWARD, V - correct, PERCENT)                                                               #  } spins the motors using the computed degrees and set the speed to V with correction
         Left.spin(FORWARD, V + correct, PERCENT)                                                                # /
         wait(20)                                                                                                # waits to lighten the program 
@@ -277,24 +287,24 @@ def forward(mm, V=60):                                                          
 #################
 #   Autonomous  #
 #################
-
 def onauton_autonomous_0():
     intake.spin_for(REVERSE, 100, DEGREES, wait=False)
-    forward(700, -75)
+    forward(700, -85)
     mogo.set(True)
     Turn(65)
     intake.spin(FORWARD)
     forward(600)
-    Turn(-60)
+    Turn(-135)
+    forward(920)
+    Turn(90)
     cc.set(True)
     forward(600)
-    Turn(60)
-    forward(200)
-    Turn(-60)
-    forward(100)
-    Turn(-90)
+    Turn(90)
     cc.set(False)
-    intake.stop()
+    Turn(-15)
+    forward(300)
+    wait(200)
+    forward(100, -85)
     forward(200)
 
 def when_started1():
