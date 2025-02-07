@@ -358,6 +358,7 @@ def vexcode_driver_function():
         wait( 10, MSEC )
     # Stop the driver control tasks
     driver_control_task_0.stop()
+    driver_control_task_1.stop()
 
 # register the competition functions
 competition = Competition( vexcode_driver_function, vexcode_auton_function )
