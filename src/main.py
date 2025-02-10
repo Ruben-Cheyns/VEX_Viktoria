@@ -155,8 +155,8 @@ def when_started4():
     intake.set_stopping(BRAKE)
 
 #   enable intake on B reverse on hold   #
-def onevent_controller_1buttonLeft_pressed_0():
-    while controller_1.buttonLeft.pressing():
+def onevent_controller_1buttonUp_pressed_0():
+    while controller_1.buttonUp.pressing():
         intake.spin(REVERSE)
     intake.spin(FORWARD)
 
