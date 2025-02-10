@@ -26,6 +26,7 @@ class GameElements:
     MOBILE_GOAL = 0
     RED_RING = 1
 blue_ring = Colordesc(1, 28, 64, 107, 40, 0.2)
+
 ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring)
 
 
@@ -289,23 +290,56 @@ def forward(mm, V=85):                                                          
 #   Autonomous  #
 #################
 
+def ring_keep():
+    while True:
+        rings = ai_vision.take_snapshot(red_ring)
+        if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
+            intake.stop()
+            break
+        wait(5, MSEC)
+
 def onauton_autonomous_0():
     intake.spin(FORWARD)
     wait(500)
-    Turn(110)
-    forward(600, -85)
+    forward(200)
+    Turn(85)
+    forward(650, -65)
     mogo.set(True)
     wait(500)
-    Turn(-110)
+    forward(100)
+    Turn(-95)
     forward(500)
-    Turn(-92)
+    Turn(-95)
     forward(500)
-    Turn(-92)
-    forward(1100)
+    Turn(-95)
+    forward(600)
+    forward(500, 65)
     Turn(-100)
     forward(300, -85)
     mogo.set(False)
     forward(1500)
+    Turn(180)
+    forward(600, -65)
+    mogo.set(True)
+    wait(500)
+    Turn(-135)
+    forward(500)
+    Turn(-60)
+    forward(200)
+    Turn(-60)
+    forward(300)
+    Turn(-30)
+    forward(450, -85)
+    mogo.set(False)
+    keep = Thread( ring_keep )
+    forward(1500)
+    Turn(-45)
+    forward(1500)
+    Turn(135)
+    keep.stop()
+    forward(200, -65)
+    mogo.set(True)
+    intake.spin(FORWARD)
 
 def when_started1():
     inertial.calibrate()
@@ -349,13 +383,12 @@ controller_1.buttonDown.pressed(onevent_controller_1buttonDown_pressed_0)
 
 # add 15ms delay to make sure events are registered correctly.
 wait(15, MSEC)
-
 #ws2 = Thread( when_started2 )
 ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
 ws6 = Thread( when_started6 )
-ws7 = Thread( when_started7 )
+#ws7 = Thread( when_started7 )
 ws8 = Thread( when_started8 )
 
 when_started1()
