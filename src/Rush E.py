@@ -104,15 +104,15 @@ def when_started2():
 #   toggle mogo mech    #
 def when_started3():
     while True:
-        while not controller_1.buttonA.pressing():
+        while not controller_1.buttonB.pressing():
             wait(5, MSEC)
         mogo.set(True)
-        while controller_1.buttonA.pressing():
+        while controller_1.buttonB.pressing():
             wait(5, MSEC)
-        while not controller_1.buttonA.pressing():
+        while not controller_1.buttonB.pressing():
             wait(5, MSEC)
         mogo.set(False)
-        while controller_1.buttonA.pressing():
+        while controller_1.buttonB.pressing():
             wait(5, MSEC)
         wait(5, MSEC)
 
@@ -134,15 +134,15 @@ def when_started5():
 #   toggle climb    #
 def when_started9():
     while True:
-        while not controller_1.buttonLeft.pressing():
+        while not controller_1.buttonDown.pressing():
             wait(5, MSEC)
         climb.set(True)
-        while controller_1.buttonLeft.pressing():
+        while controller_1.buttonDown.pressing():
             wait(5, MSEC)
-        while not controller_1.buttonLeft.pressing():
+        while not controller_1.buttonDown.pressing():
             wait(5, MSEC)
         climb.set(False)
-        while controller_1.buttonLeft.pressing():
+        while controller_1.buttonDown.pressing():
             wait(5, MSEC)
 
 #   climb auto open #
@@ -155,9 +155,9 @@ def when_started4():
     intake.set_velocity(120, RPM)
     intake.set_stopping(BRAKE)
 
-#   enable intake on B reverse on hold   #
-def onevent_controller_1buttonB_pressed_0():
-    while controller_1.buttonB.pressing():
+#   enable intake on Up reverse on hold   #
+def onevent_controller_1buttonUp_pressed_0():
+    while controller_1.buttonUp.pressing():
         intake.spin(REVERSE)
     intake.spin(FORWARD)
 
@@ -197,16 +197,16 @@ def when_started6():
         Lb.spin_to_position(0, DEGREES)
 
 #   spin ladybrown forwards on R2   #
-def onevent_controller_1buttonUp_pressed_0():
+def onevent_controller_1buttonR2_pressed_0():
     Lb.spin(FORWARD)
-    while controller_1.buttonUp.pressing():
+    while controller_1.buttonR2.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
 #   spin ladybrown backwards on R1   #
-def onevent_controller_1buttonDown_pressed_0():
+def onevent_controller_1buttonR1_pressed_0():
     Lb.spin(REVERSE)
-    while controller_1.buttonDown.pressing():
+    while controller_1.buttonR1.pressing():
         wait(5, MSEC)
     Lb.stop(HOLD)
 
@@ -215,7 +215,7 @@ def when_started7():
     while True:
         controller_1.screen.clear_line()
         controller_1.screen.print("sorting")
-        while not controller_1.buttonRight.pressing():
+        while not controller_1.buttonLeft.pressing():
             rings = ai_vision.take_snapshot(blue_ring)
             if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
                 wait(0.42, SECONDS)
@@ -223,12 +223,12 @@ def when_started7():
                 wait(200)
                 intake.spin(FORWARD)
             wait(5, MSEC)
-        while controller_1.buttonRight.pressing():
+        while controller_1.buttonLeft.pressing():
             wait(5, MSEC)
         controller_1.screen.clear_line()
-        while not controller_1.buttonRight.pressing():
+        while not controller_1.buttonLeft.pressing():
             wait(50, MSEC)
-        while controller_1.buttonRight.pressing():
+        while controller_1.buttonLeft.pressing():
             wait(5, MSEC)
             
 #   stakelock   #
@@ -364,9 +364,9 @@ competition = Competition( vexcode_driver_function, vexcode_auton_function )
 # system event handlers
 controller_1.buttonL1.pressed(onevent_controller_1buttonL1_pressed_0)
 controller_1.buttonL2.pressed(onevent_controller_1buttonL2_pressed_0)
-controller_1.buttonB.pressed(onevent_controller_1buttonB_pressed_0)
 controller_1.buttonUp.pressed(onevent_controller_1buttonUp_pressed_0)
-controller_1.buttonDown.pressed(onevent_controller_1buttonDown_pressed_0)
+controller_1.buttonR1.pressed(onevent_controller_1buttonR1_pressed_0)
+controller_1.buttonR2.pressed(onevent_controller_1buttonR2_pressed_0)
 
 # add 15ms delay to make sure events are registered correctly.
 wait(15, MSEC)
@@ -375,9 +375,9 @@ wait(15, MSEC)
 ws3 = Thread( when_started3 )
 ws4 = Thread( when_started4 )
 ws5 = Thread( when_started5 )
-ws6 = Thread( when_started6 )
+#ws6 = Thread( when_started6 )
 ws7 = Thread( when_started7 )
-ws8 = Thread( when_started8 )
+#ws8 = Thread( when_started8 )
 ws9 = Thread( when_started9 )
 
 when_started1()
