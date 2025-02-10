@@ -26,7 +26,7 @@ class GameElements:
     MOBILE_GOAL = 0
     RED_RING = 1
 blue_ring = Colordesc(1, 28, 64, 107, 40, 0.2)
-
+red_ring = Colordesc(1, 140, 35, 58, 10, 0.2)
 ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring)
 
 
@@ -337,7 +337,7 @@ def onauton_autonomous_0():
     forward(1500)
     Turn(135)
     keep.stop()
-    forward(200, -65)
+    forward(400, -65)
     mogo.set(True)
     intake.spin(FORWARD)
 
