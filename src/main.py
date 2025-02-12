@@ -27,7 +27,7 @@ class GameElements:
     RED_RING = 1
 blue_ring = Colordesc(1, 28, 64, 107, 40, 0.2)
 red_ring = Colordesc(1, 140, 35, 58, 10, 0.2)
-ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring)
+ai_vision = AiVision(Ports.PORT4, AiVision.ALL_AIOBJS, blue_ring, red_ring)
 
 
 # wait for rotation sensor to fully initialize
@@ -253,8 +253,8 @@ def Turn(turnDesired, tolerance=0.2):                                           
         wait(50)                                                                                                # waits to lighten the program
         print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)      # prints feedback used to tune the PID
     
-    Right.stop(COAST)                                                                                            #  } stops motors using hold brakestyle
-    Left.stop(COAST)                                                                                             # /
+    Right.stop(HOLD)                                                                                            #  } stops motors using hold brakestyle
+    Left.stop(HOLD)                                                                                             # /
 
     """wait(1000)                                                                                               # used in debuging to see the final angle
     print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)
@@ -264,7 +264,7 @@ KFP = KP
 KFI = 0
 KFD = 0
 
-def forward(mm, V=85):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
+def forward(mm, V=80):                                                                                          # a function to drive forward, parameters mm as distance in milimeters and V as velocity are given in the function
     deg = mm*(360/320)                                                                                          # converts the distance to degrees of the motors
     inertial.reset_rotation()                                                                                   # resets the inertial sensor to 0
     Right.reset_position()                                                                                      # resets the motor position to 0
@@ -294,14 +294,14 @@ def ring_keep():
     while True:
         rings = ai_vision.take_snapshot(red_ring)
         if rings and ai_vision.object_count() > 0 and rings[0].width > 50:
-            intake.stop()
+            intake.stop(BRAKE)
             break
         wait(5, MSEC)
 
 def onauton_autonomous_0():
     intake.spin(FORWARD)
     wait(500)
-    forward(200)
+    forward(230)
     Turn(85)
     forward(650, -65)
     mogo.set(True)
@@ -309,34 +309,37 @@ def onauton_autonomous_0():
     forward(100)
     Turn(-95)
     forward(500)
+    Turn(-88)
+    forward(500)
     Turn(-95)
-    forward(500)
-    Turn(-93)
-    forward(500)
-    Turn(-135)
-    forward(300, -85)
+    forward(600)
+    forward(350, 65)
+    forward(200, -65)
+    Turn(225)
+    forward(150, -85)
     mogo.set(False)
-    forward(300)
+    forward(250)
     Turn(-135)
-    forward(1350)
-    forward(600, -65)
+    forward(1350, -75)
+    forward(450, -65)
     mogo.set(True)
     wait(500)
-    Turn(-145)
+    Turn(-180)
     forward(500)
-    Turn(-60)
-    forward(200)
-    Turn(-60)
-    forward(300)
-    Turn(-30)
-    forward(450, -85)
+    forward(300, -65)
+    Turn(45)
+    forward(300, 65)
+    forward(100, -65)
+    Turn(-180)
+    forward(520, -65)
     mogo.set(False)
     keep = Thread( ring_keep )
-    Turn(-10)
-    forward(1500)
-    Turn(-45)
-    forward(1500)
+    forward(450)
+    Turn(45)
+    forward(1000)
     Turn(135)
+    forward(500, -65)
+    Turn(-45)
     keep.stop()
     forward(400, -65)
     mogo.set(True)
