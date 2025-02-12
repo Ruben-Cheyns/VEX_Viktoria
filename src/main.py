@@ -260,6 +260,35 @@ def Turn(turnDesired, tolerance=0.2):                                           
     print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)
 """
 
+def Head(turnDesired, tolerance=0.2):                                                                           # a self made PID to turn, parameters turnDesired and tolerance are given in the function
+    turnPrevError = 0                                                                                           # \
+    turnTotalError = 0                                                                                          #  } declares variables for the PID
+    wait(100)
+    t = 0                                                                                                       # /
+    while abs(turnDesired + inertial.heading()) > tolerance:                                                   # repeats the PID until the given angle is reached   
+        t += 1                                                                                                  # counts iterrations for feedback
+        turnError = turnDesired + inertial.heading()                                                           # calculates the error
+        turnDerivative = turnError - turnPrevError                                                              # calculates the derivative
+        turn = turnError * KP + turnDerivative * KD + turnTotalError * KI                                       # The total value in percentage as motor input
+        turnPrevError = turnError                                                                               # sets the previous error to the current error
+        turnTotalError += turnError                                                                             # adds the current error to the total error
+        if turnTotalError > 75:                                                                                 #  } clamping on positive values to prevent buildup above 100%
+            turnTotalError = 75                                                                                 # /
+        elif turnTotalError < -75:                                                                              #  } clamping on negative values to prevent buildup below -100%
+            turnTotalError = -75                                                                                # /
+        Right.spin(FORWARD, turn, PERCENT)                                                                     #  } starts the motors and set the speed to turn
+        Left.spin(FORWARD, -turn, PERCENT)                                                                       # /
+        
+        wait(50)                                                                                                # waits to lighten the program
+        print(inertial.heading(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)      # prints feedback used to tune the PID
+    
+    Right.stop(HOLD)                                                                                            #  } stops motors using hold brakestyle
+    Left.stop(HOLD)                                                                                             # /
+
+    """wait(1000)                                                                                               # used in debuging to see the final angle
+    print(inertial.rotation(), "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)
+"""
+
 KFP = KP
 KFI = 0
 KFD = 0
@@ -301,7 +330,7 @@ def ring_keep():
 def onauton_autonomous_0():
     intake.spin(FORWARD)
     wait(500)
-    forward(230)
+    forward(230, 65)
     Turn(85)
     forward(650, -65)
     mogo.set(True)
@@ -319,7 +348,7 @@ def onauton_autonomous_0():
     forward(150, -85)
     mogo.set(False)
     forward(250)
-    Turn(-145)
+    Turn(-140)
     forward(1350, -75)
     forward(450, -65)
     mogo.set(True)
@@ -328,22 +357,34 @@ def onauton_autonomous_0():
     forward(500)
     forward(300, -65)
     Turn(45)
-    forward(300, 65)
-    forward(100, -65)
-    Turn(-200)
+    forward(400, 65)
+    forward(200, -65)
+    Turn(-190)
     forward(520, -65)
     mogo.set(False)
     keep = Thread( ring_keep )
     forward(450)
     Turn(70)
     forward(1500)
-    Turn(105)
-    forward(1500, -65)
-    Turn(-45)
+    Turn(115)
+    forward(1350, -85)
+    Turn(-55)
     keep.stop()
     forward(400, -65)
     mogo.set(True)
     intake.spin(FORWARD)
+    Turn(135)
+    forward(500)
+    Turn(45)
+    forward(500)
+    Turn(90)
+    Turn(-100)
+    forward(500)
+    Turn(270)
+    forward(200, -65)
+    forward(200)
+    Turn(45)
+    forward(2000)
 
 def when_started1():
     inertial.calibrate()
