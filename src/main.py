@@ -147,7 +147,7 @@ def when_started3():
 #   climb auto open #
 def ondriver_drivercontrol_1():
     wait(90, SECONDS)
-    climb.set(False)
+    climb.set(True)
 
 #   set intake velocity and brake   #
 def when_started4():
