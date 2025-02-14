@@ -148,7 +148,7 @@ def when_started9():
 #   climb auto open #
 def ondriver_drivercontrol_1():
     wait(90, SECONDS)
-    climb.set(False)
+    climb.set(True)
 
 #   set intake velocity and brake   #
 def when_started4():
@@ -308,7 +308,6 @@ def forward(mm, V=85):                                                          
 #################
 
 def onauton_autonomous_0():
-    intake.spin_for(REVERSE, 100, DEGREES, wait=False)
     forward(700, -85)
     mogo.set(True)
     Turn(-65)
