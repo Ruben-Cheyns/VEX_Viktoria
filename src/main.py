@@ -307,7 +307,6 @@ def forward(mm, V=85):                                                          
 #################
 
 def onauton_autonomous_0():
-    intake.spin_for(REVERSE, 100, DEGREES, wait=False)
     forward(250, -75)
     Turn(90)
     forward(150, -20)
