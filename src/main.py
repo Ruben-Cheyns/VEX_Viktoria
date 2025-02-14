@@ -364,6 +364,7 @@ def onauton_autonomous_0():
     forward(650, -65)
     mogo.set(False)
     climb.set(True)
+    cc.set(True)
     forward(2200, 90)
     climb.set(False)
     """keep = Thread( ring_keep )
