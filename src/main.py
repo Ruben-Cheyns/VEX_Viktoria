@@ -313,9 +313,9 @@ def forward(mm, V=85):                                                          
 #################
 
 def onauton_autonomous_0():
-    forward(250, -70)
+    forward(210, -70)
     Turn(-90)
-    forward(150, -20)
+    forward(100, -20)
     intake.spin(FORWARD)
     wait(500)
     forward(200)
@@ -325,13 +325,13 @@ def onauton_autonomous_0():
     mogo.set(True)
     wait(500)
     intake.spin(FORWARD)
-    Turn(-130)
+    Turn(-120)
     forward(250)
-    Turn(-100)
+    Turn(-120)
     forward(200)
     forward(100, -85)
-    Turn(-10)
-    forward(100)
+    Turn(20)
+    forward(200)
 
 def when_started1():
     inertial.calibrate()
