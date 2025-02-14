@@ -307,9 +307,9 @@ def forward(mm, V=85):                                                          
 #################
 
 def onauton_autonomous_0():
-    forward(250, -75)
+    forward(210, -75)
     Turn(90)
-    forward(150, -20)
+    forward(100, -20)
     intake.spin(FORWARD)
     wait(500)
     forward(70)
@@ -322,10 +322,10 @@ def onauton_autonomous_0():
     Turn(110)
     forward(450)
     Turn(87)
-    forward(200)
+    forward(300)
     forward(100, -75)
     Turn(10)
-    forward(100)
+    forward(150)
 
 def when_started1():
     inertial.calibrate()
