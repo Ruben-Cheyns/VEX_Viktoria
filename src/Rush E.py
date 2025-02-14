@@ -130,6 +130,24 @@ def when_started5():
         while controller_1.buttonY.pressing():
             wait(5, MSEC)
         wait(5, MSEC)
+#   toggle climb    #
+def when_started9():
+    while True:
+        while not controller_1.buttonDown.pressing():
+            wait(5, MSEC)
+        climb.set(True)
+        while controller_1.buttonDown.pressing():
+            wait(5, MSEC)
+        while not controller_1.buttonDown.pressing():
+            wait(5, MSEC)
+        climb.set(False)
+        while controller_1.buttonDown.pressing():
+            wait(5, MSEC)
+
+#   climb auto open #
+def ondriver_drivercontrol_1():
+    wait(90, SECONDS)
+    climb.set(True)
 
 #   set intake velocity and brake   #
 def when_started4():
@@ -288,7 +306,6 @@ def forward(mm, V=85):                                                          
 #   Autonomous  #
 #################
 def onauton_autonomous_0():
-    intake.spin_for(REVERSE, 100, DEGREES, wait=False)
     forward(700, -85)
     mogo.set(True)
     Turn(65)
