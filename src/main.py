@@ -322,11 +322,11 @@ def onauton_autonomous_0():
     Turn(110)
     forward(450)
     Turn(87)
-    forward(300)
+"""    forward(300)
     forward(100, -75)
     Turn(10)
     forward(150)
-
+"""
 def when_started1():
     inertial.calibrate()
     inertial.set_turn_type(LEFT)
