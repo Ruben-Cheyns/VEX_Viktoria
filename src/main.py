@@ -328,10 +328,10 @@ def onauton_autonomous_0():
     Turn(-120)
     forward(250)
     Turn(-120)
-    forward(200)
+"""    forward(200)
     forward(100, -85)
     Turn(20)
-    forward(200)
+    forward(200)"""
 
 def when_started1():
     inertial.calibrate()
