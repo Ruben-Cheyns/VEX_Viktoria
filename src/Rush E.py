@@ -23,10 +23,9 @@ intake_motor_c = Motor(Ports.PORT20, GearSetting.RATIO_18_1, False)
 intake = MotorGroup(intake_motor_a, intake_motor_b, intake_motor_c)
 Lb = Motor(Ports.PORT11 ,GearSetting.RATIO_18_1, False)
 inertial = Inertial(Ports.PORT19)
-ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS)
 class GameElements:
     MOBILE_GOAL = 0
-red_ring = Colordesc(1, 140, 35, 58, 10, 0.2)
+red_ring = Colordesc(1, 247, 160, 186, 31, 0.36)
 ai_vision = AiVision(Ports.PORT5, AiVision.ALL_AIOBJS, red_ring)
 
 
@@ -316,7 +315,7 @@ def onauton_autonomous_0():
     forward(920)
     Turn(90)
     cc.set(True)
-    forward(600)
+    forward(900)
     Turn(90)
     cc.set(False)
     Turn(-15)
@@ -347,6 +346,7 @@ def vexcode_auton_function():
 def vexcode_driver_function():
     # Start the driver control tasks
     driver_control_task_0 = Thread( ondriver_drivercontrol_0 )
+    driver_control_task_1 = Thread( ondriver_drivercontrol_1 )
 
     # wait for the driver control period to end
     while( competition.is_driver_control() and competition.is_enabled() ):
@@ -354,6 +354,7 @@ def vexcode_driver_function():
         wait( 10, MSEC )
     # Stop the driver control tasks
     driver_control_task_0.stop()
+    driver_control_task_1.stop()
 
 # register the competition functions
 competition = Competition( vexcode_driver_function, vexcode_auton_function )
@@ -375,5 +376,6 @@ ws5 = Thread( when_started5 )
 #ws6 = Thread( when_started6 )
 ws7 = Thread( when_started7 )
 #ws8 = Thread( when_started8 )
+ws9 = Thread( when_started9 )
 
 when_started1()
