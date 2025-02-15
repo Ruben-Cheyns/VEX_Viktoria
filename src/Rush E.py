@@ -314,7 +314,7 @@ def onauton_autonomous_0():
     Turn(-135)
     forward(920)
     Turn(90)
-    cc.set(True)
+    """cc.set(True)
     forward(900)
     Turn(90)
     cc.set(False)
@@ -322,7 +322,7 @@ def onauton_autonomous_0():
     forward(300)
     wait(200)
     forward(100, -85)
-    forward(200)
+    forward(200)"""
 
 def when_started1():
     inertial.calibrate()
