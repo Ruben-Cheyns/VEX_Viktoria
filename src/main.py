@@ -2,6 +2,7 @@
 #region VEXcode Generated Robot Configuration
 from vex import *
 import urandom
+import matplotlib.pyplot as plt
 
 # Brain should be defined by default
 brain=Brain()
@@ -55,6 +56,20 @@ print("\033[2J")
 
 #endregion VEXcode Generated Robot Configuration
 
+errorGraph = []
+derivativeGraph = []
+totalErrorGraph = []
+tGraph = []
+
+plt.ion()
+graphError = plt.plot(tGraph, errorGraph)[0]
+graphDerivative = plt.plot(tGraph, derivativeGraph)[0]
+graphTotalError = plt.plot(tGraph, totalErrorGraph)[0]
+plt.legend(["Error", "Derivative", "Total Error"])
+plt.xlabel("Time (s)")
+plt.title("PID Tuning")
+plt.grid()
+plt.show()
 #####################
 #   Drive function  #
 #####################
@@ -241,6 +256,21 @@ def Turn(turnDesired, tolerance=0.2):                                           
         
         wait(50)                                                                                                # waits to lighten the program
         print(inertial.rotation(),"\t", turn, "\t", turnError, "\t", turnDerivative, "\t", turnTotalError, "\t",t*50)      # prints feedback used to tune the PID
+        errorGraph.append(turnError)
+        derivativeGraph.append(turnDerivative)
+        totalErrorGraph.append(turnTotalError)
+        tGraph.append(t*50)
+        graphError.remove()
+        graphDerivative.remove()
+        graphTotalError.remove()
+        graphError = plt.plot(tGraph, errorGraph, color = 'r')[0]
+        graphDerivative = plt.plot(tGraph, derivativeGraph, color = 'g')[0]
+        graphTotalError = plt.plot(tGraph, totalErrorGraph, color = 'b')[0]
+        plt.legend(["Error", "Derivative", "Total Error"])
+        plt.xlabel("Time (s)")
+        plt.title("PID Tuning")
+
+
     
     Right.stop(HOLD)                                                                                            #  } stops motors using hold brakestyle
     Left.stop(HOLD)                                                                                             # /
