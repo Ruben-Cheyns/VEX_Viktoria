@@ -62,11 +62,11 @@ totalErrorGraph = []
 tGraph = []
 
 plt.ion()
-graphError = plt.plot(tGraph, errorGraph)[0]
-graphDerivative = plt.plot(tGraph, derivativeGraph)[0]
-graphTotalError = plt.plot(tGraph, totalErrorGraph)[0]
+graphError = plt.plot(tGraph, errorGraph, color = 'r')[0]
+graphDerivative = plt.plot(tGraph, derivativeGraph, color = 'g')[0]
+graphTotalError = plt.plot(tGraph, totalErrorGraph, color = 'b')[0]
 plt.legend(["Error", "Derivative", "Total Error"])
-plt.xlabel("Time (s)")
+plt.xlabel("Time (ms)")
 plt.title("PID Tuning")
 plt.grid()
 plt.show()
@@ -260,9 +260,16 @@ def Turn(turnDesired, tolerance=0.2):                                           
         derivativeGraph.append(turnDerivative)
         totalErrorGraph.append(turnTotalError)
         tGraph.append(t*50)
-        graphError.remove()
-        graphDerivative.remove()
-        graphTotalError.remove()
+        plt.xlim(tGraph[0], tGraph[-1])
+        plt.ylim(min(min(errorGraph), min(derivativeGraph), min(totalErrorGraph)), max(max(errorGraph), max(derivativeGraph), max(totalErrorGraph)))
+        if len(tGraph) > 100:
+            tGraph.pop(0)
+            errorGraph.pop(0)
+            derivativeGraph.pop(0)
+            totalErrorGraph.pop(0)
+            graphError.remove()
+            graphDerivative.remove()
+            graphTotalError.remove()
         graphError = plt.plot(tGraph, errorGraph, color = 'r')[0]
         graphDerivative = plt.plot(tGraph, derivativeGraph, color = 'g')[0]
         graphTotalError = plt.plot(tGraph, totalErrorGraph, color = 'b')[0]
